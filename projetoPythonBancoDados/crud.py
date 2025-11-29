@@ -8,7 +8,7 @@ def Animacao():
             print("*")
 
 def ListarTabelas(cursor, conexao):
-     conexao = sqlite3.connect("abobrinha.sqlite")
+     conexao = sqlite3.connect("python.sqlite")
      cursor = conexao.cursor()
 
      listarTabelas = "SELECT name FROM sqlite_master WHERE type='table';"
