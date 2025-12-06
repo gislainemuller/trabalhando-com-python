@@ -1,5 +1,5 @@
 from time import sleep
-from crud import readTable, createTable, deleteTable
+from crud import readTable, createTable, deleteTable, InsertSql
 import sqlite3
 
 def menu_interacao():
@@ -13,7 +13,7 @@ def menu_interacao():
             print("Bem vindo ao nosso sistema!")
             print("Verificando se existem tabelas no banco...\n")
             
-            conexao = sqlite3.connect("Python.sqlite")
+            conexao = sqlite3.connect("python.sqlite")
             cursor = conexao.cursor()
 
             readTable(conexao, cursor)
@@ -21,11 +21,9 @@ def menu_interacao():
 
             criarTabela = input("Deseja criar uma tabela?\nDigite 1 para Sim e 2 para Não: ")
 
-            createTable()
-
             if criarTabela == "1":
-                nomeTabela = input("Digite o nome da tabela que pretende criar: ")
-                print(f"Tabela '{nomeTabela}' criada com sucesso!\n")
+                nomeTabela = input("Qual o nome da tabela que deseja criar? ")
+                createTable(conexao, cursor)
 
             elif criarTabela == "2":
                 print("A tabela não foi criada!\n")
@@ -33,15 +31,16 @@ def menu_interacao():
             else:
                 print("Opção inválida!\n")
 
-            deletarTabela = input("Você deseja excluir uma tabela?\nDigite 1 para Sim e 2 para Não: ")
+            print("Inserindo dados iniciais automaticamente...\n")
+            InsertSql(conexao, cursor)
 
-            deleteTable()
+            deletarTabela = input("Deseja deletar uma tabela?\nDigite 1 para Sim e 2 para Não: ")
 
             if deletarTabela == "1":
-                print("Exclusão da tabela realizada com sucesso")
+                deleteTable(cursor, conexao)
 
             elif deletarTabela == "2":
-                print("A tabela não foi removida!\n")
+                print("A Tabela não foi deletada!\n")
 
             else:
                 print("Opção inválida!\n")
@@ -52,13 +51,13 @@ def menu_interacao():
         elif continuarSistema == "2":
 
             for animacao in range(8):
-                sleep(0.1)
+                sleep(0.2)
                 print("*")
 
-            print("A sessão foi encerrada")
+            print("Você saiu do sistema.")
             loop = False
 
 
         else:
-            print("Forneça uma opção válida!\n")
+            print("Informe uma opção válida!\n")
             loop = True

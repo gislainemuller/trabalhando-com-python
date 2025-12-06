@@ -1,10 +1,11 @@
 import sqlite3
 
 conexao = sqlite3.connect("python.sqlite")
+
 cursor = conexao.cursor()
 
 comandoSQL = '''
-CREATE TABLE IF NOT EXISTS tabelas (
+CREATE TABLE IF NOT EXISTS Tabelas (
 id INTEGER,
 nome TEXT NOT NULL
 )
