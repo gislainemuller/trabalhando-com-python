@@ -1,25 +1,28 @@
-from time import sleep
 import sqlite3
 
+def createTable():
+      print('Tabela criada....')
 
-def Animacao():
-    for animacao in range(20):
-            sleep(0.1)
-            print("*")
+def readTable(conexao, cursor):
+            conexao = sqlite3.connect("Python.sqlite")
+            cursor = conexao.cursor()
 
-def ListarTabelas(cursor, conexao):
-     conexao = sqlite3.connect("python.sqlite")
-     cursor = conexao.cursor()
+            listarTabelas = "SELECT name FROM sqlite_master WHERE type='table';"
 
-     listarTabelas = "SELECT name FROM sqlite_master WHERE type='table';"
+            cursor.execute(listarTabelas)
 
-     cursor.execute(listarTabelas)
+            tabelas = cursor.fetchall()
 
-     tabelas = cursor.fetchall()
+            if tabelas:
+             for tabela in tabelas:
+              print("Tabela", tabela[0])
 
-     if tabelas:
-      for tabela in tabelas:
-        print("Tabela", tabela[0])
+            else: 
+             print("A Tabela não foi encontrada")
 
-     else: 
-      print("nenhuma Tabela encontrada no banco atual")
+
+def update():
+    pass
+
+def deleteTable():
+    print("Deletado....")

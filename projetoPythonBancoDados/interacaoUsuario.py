@@ -1,60 +1,64 @@
 from time import sleep
+from crud import readTable, createTable, deleteTable
 import sqlite3
-from connectDB import ListarTabelas
 
 def menu_interacao():
     
     loop = True
 
     while loop != False:
-        continuarSistema = int(input(f"Deseja continuar no sistema?\n (1) para Continuar e (2) para Sair: "))
+        continuarSistema = input("Deseja continuar ou sair\nDigite 1 para Continuar e 2 para Sair: ")
 
-        if continuarSistema == 1:
-            print("Continuando com o sistema")
-            print("Verificando se existe tabelas no sistema")
-            conexao = sqlite3.connect("python.sqlite")
+        if continuarSistema == "1":
+            print("Bem vindo ao nosso sistema!")
+            print("Verificando se existem tabelas no banco...\n")
+            
+            conexao = sqlite3.connect("Python.sqlite")
             cursor = conexao.cursor()
 
-            ListarTabelas(cursor, conexao)
-          
-            criaTabela = int(input(f"Deseja criar uma tabela?\nDigite (1)-Sim e (2)-Não: "))
-            if criaTabela == 1:
-                print("Processando a criação das tabelas...")
-            
-            elif criaTabela == 2:
-                print("Tudo bem, nenhuma tabela adicional será criada.")
-            
+            readTable(conexao, cursor)
+
+
+            criarTabela = input("Deseja criar uma tabela?\nDigite 1 para Sim e 2 para Não: ")
+
+            createTable()
+
+            if criarTabela == "1":
+                nomeTabela = input("Digite o nome da tabela que pretende criar: ")
+                print(f"Tabela '{nomeTabela}' criada com sucesso!\n")
+
+            elif criarTabela == "2":
+                print("A tabela não foi criada!\n")
+
             else:
-                print("Opção inválida! Tente novamente.")
+                print("Opção inválida!\n")
 
-            excluirTabela = int(input(f"Deseja deletar uma tabela?\nDigite 1 para Sim e 2 para Não: "))
+            deletarTabela = input("Você deseja excluir uma tabela?\nDigite 1 para Sim e 2 para Não: ")
 
-            if excluirTabela == 1:
-                print("Deletando tabelas...")
-            
-            elif excluirTabela == 2:
-                print("Ok, não será deletado nenhuma tabela!")
-            
+            deleteTable()
+
+            if deletarTabela == "1":
+                print("Exclusão da tabela realizada com sucesso")
+
+            elif deletarTabela == "2":
+                print("A tabela não foi removida!\n")
+
             else:
-                print("Opção inválida! Tente novamente.")
+                print("Opção inválida!\n")
+
+            loop = True  
 
 
-            loop = True
+        elif continuarSistema == "2":
 
-
-
-        elif continuarSistema == 2:
-
-            for animacao in range(20):
+            for animacao in range(8):
                 sleep(0.1)
                 print("*")
-                
-            print("Você Saiu do sistema !")
 
+            print("A sessão foi encerrada")
             loop = False
 
 
-
         else:
-            print("Opção inválida. Tente novamente.")
+            print("Forneça uma opção válida!\n")
             loop = True
